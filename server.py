@@ -38,7 +38,7 @@ def image_mars():
                     </html>"""
 
 
-@app.route('/form_sample', methods=['POST', 'GET'])
+@app.route('/astronaut_selection', methods=['POST', 'GET'])
 def form_sample():
     if request.method == 'GET':
         return f'''<!doctype html>
