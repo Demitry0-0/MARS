@@ -153,5 +153,39 @@ def form_sample():
         return "Форма отправлена"
 
 
+@app.route('/choice/<planet_name>')
+def choice(planet_name):
+    return f"""
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>Варианты выбора</title>
+    <link rel="stylesheet" 
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" 
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" 
+    crossorigin="anonymous">
+</head>
+<body>
+    <h1>Моё предложение: {planet_name.title()}</h1>
+    <div class="alert alert-light" role="alert">
+    <h3>Эта планета;</h3>
+    </div>                             
+    <div class="alert alert-success" role="alert">
+    <h3>На ней может быть много ресурсов;</h3>
+    </div>
+    <div class="alert alert-secondary" role="alert">
+    <h3>На ней может быть вода и атмосфера;</h3>
+    </div>
+    <div class="alert alert-warning" role="alert">
+    <h3>На ней может быть небольшое магнитное поле;</h3>
+    </div>
+    <div class="alert alert-danger" role="alert">
+    <h3>Наконец, она просто великолепна!</h3>
+    </div>
+</body>
+</html>"""
+
+
 if __name__ == '__main__':
     app.run(port=8080, host='127.0.0.1')
