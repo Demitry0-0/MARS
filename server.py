@@ -1,6 +1,4 @@
-from flask import Flask, url_for, request
-from PIL import Image
-from io import BytesIO
+from flask import Flask, url_for, request, render_template
 
 app = Flask(__name__)
 
@@ -258,6 +256,7 @@ def carousel():
                       </body>
                     </html>"""
 
+
 def new():
     return f'''<!doctype html>
                         <html lang="en">
@@ -282,6 +281,8 @@ def new():
                             </form>
                           </body>
                         </html>'''
+
+
 @app.route('/load_photo', methods=['POST', 'GET'])
 def load_photo():
     if request.method == 'GET':
@@ -316,6 +317,14 @@ def load_photo():
                     </form>
                   </body>
                 </html>'''
+
+
+@app.route('/training/<prof>')
+def training(prof):
+    if 'инженер' in prof.lower() or 'строитель' in prof.lower():
+        return render_template('training.html', name='Инженерные тренажеры', photo='it.png')
+    else:
+        return render_template('training.html', name='Научные симуляторы', photo='science.png')
 
 
 if __name__ == '__main__':
