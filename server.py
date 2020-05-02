@@ -282,8 +282,8 @@ def new():
                             </form>
                           </body>
                         </html>'''
-@app.route('/sample_file_upload', methods=['POST', 'GET'])
-def sample_file_upload():
+@app.route('/load_photo', methods=['POST', 'GET'])
+def load_photo():
     if request.method == 'GET':
         return new()
     elif request.method == 'POST':
