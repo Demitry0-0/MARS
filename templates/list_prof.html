@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% for item in lst %}
+{% if tp == 'ol' %}
+{{ loop.index }}. {{item}} <br>
+{%else%}
+<li>{{item}}</li>
+{%endif%}
+{% endfor %}
+{% endblock %}

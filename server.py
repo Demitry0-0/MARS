@@ -327,5 +327,21 @@ def training(prof):
         return render_template('training.html', name='Научные симуляторы', photo='science.png')
 
 
+@app.route('/list_prof')
+@app.route('/list_prof/<tp>')
+def list_prof(tp=False):
+    if tp:
+        lst = ['инженер-исследователь', 'пилот', 'строитель', 'экзобиолог',
+               'врач', 'инженер по терраформированию', 'климотолог',
+               'специолист по радиационной защите', 'астрогеолог', 'гляцеолог',
+               'инженер жизниобеспечиния', 'метеоролог', 'оператор марсохода',
+               'киберинженер', 'штурман', 'пилот дронов']
+        if tp == 'ol':
+            return render_template('list_prof.html', tp='ol', lst=lst)
+        elif tp == 'ul':
+            return render_template('list_prof.html', tp='ul', lst=lst)
+    return 'Неверный параметр.'
+
+
 if __name__ == '__main__':
     app.run(port=8080, host='127.0.0.1')
