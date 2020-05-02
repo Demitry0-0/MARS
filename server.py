@@ -2,6 +2,7 @@ from flask import Flask, url_for, request, render_template, redirect
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, IntegerField
 from wtforms.validators import DataRequired
+import random
 
 
 class LoginForm(FlaskForm):
@@ -21,6 +22,19 @@ class DostupForm(FlaskForm):
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
+
+
+@app.route('/table/<sex>/<int:age>')
+def table(sex, age):
+    if sex == 'male':
+        color = random.choice(['man1.jpg', 'man2.jpg', 'man3.jpg'])
+    else:
+        color = random.choice(['girl1.jpg', 'girl2.jpg', 'girl3.jpg'])
+    if age < 21:
+        mars = 'marsianin1.jpg'
+    else:
+        mars = 'marsianin2.jpg'
+    return render_template('table.html', color=color, mars=mars)
 
 
 @app.route('/login', methods=['GET', 'POST'])
