@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+{%set kaut= 'Каюта №'%}
+{% for item in lst %}
+{{item}} - {{kaut}} {{ loop.index }}
+{% if loop.index  == 1 %}
+- капитан корабля
+{%endif%}
+<br>
+{% endfor %}
+{% endblock %}

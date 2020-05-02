@@ -36,6 +36,12 @@ def hack():
     return 'Миссия Колонизация Марса'
 
 
+@app.route('/distribution')
+def distribution():
+    lst = ['Vorobei', 'John', 'Boroda', 'Terner', 'VIll']
+    return render_template('distribution.html', lst=lst)
+
+
 @app.route('/index')
 def index():
     return "И на Марсе будут яблони цвести!"
