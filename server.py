@@ -1,5 +1,6 @@
 from flask import Flask, url_for, request
 from PIL import Image
+from io import BytesIO
 
 app = Flask(__name__)
 
@@ -257,23 +258,8 @@ def carousel():
                       </body>
                     </html>"""
 
-
-@app.route('/sample_file_upload', methods=['POST', 'GET', 'PATCH'])
-def sample_file_upload():
-    print(request.files)
-    if request.files:
-        file = f'<img src={url_for("static", filename="photo.jpg")} alt="Такой фотки нет">'
-        # Image.open(request.files['file'].read()).save('photo.jpg')
-    else:
-        file = ''
-    print(request.files.get('file'))
-
-    print(request.method)
-    if request.method == 'PATCH':
-        return 'dsfdfsfdsdf'
-    elif request.method == 'GET':
-        print(request.files)
-        return f'''<!doctype html>
+def new():
+    return f'''<!doctype html>
                         <html lang="en">
                           <head>
                             <meta charset="utf-8">
@@ -286,25 +272,50 @@ def sample_file_upload():
                             <title>Пример загрузки файла</title>
                           </head>
                           <body>
+                            <form method="post" class="login_form" enctype="multipart/form-data">
                             <h1>Загрузим файл</h1>
-                            <form method="put" enctype="multipart/form-data">
-                               <div class="form-group" method="put">
+                               <div class="form-group">
                                     <label for="photo">Выберите файл</label>
-                                    <input type="file" method="put" class="form-control-file" id="photo" name="file">
+                                    <input type="file" class="form-control-file" id="photo" name="file">
                                 </div>
                                 <button type="submit" class="btn btn-primary">Отправить</button>
-                                {file}
                             </form>
                           </body>
                         </html>'''
+@app.route('/sample_file_upload', methods=['POST', 'GET'])
+def sample_file_upload():
+    if request.method == 'GET':
+        return new()
     elif request.method == 'POST':
         f = request.files['file']
-        print(dir(request.files['file']))
-        print(request.files['file'].filename)
-        print(request.files)
-
-        # print(f.read())
-        return "Форма отправлена"
+        if f.filename:
+            f.save('static/img/photo.jpg')
+        else:
+            return new()
+        return f'''<!doctype html>
+                <html lang="en">
+                  <head>
+                    <meta charset="utf-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+                     <link rel="stylesheet"
+                     href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+                     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+                     crossorigin="anonymous">
+                    <link rel="stylesheet" type="text/css" href="{url_for('static', filename='css/style.css')}" />
+                    <title>Пример загрузки файла</title>
+                  </head>
+                  <body>
+                    <form method="post" class="login_form" enctype="multipart/form-data">
+                    <h1>Загрузим файл</h1>
+                       <div class="form-group">
+                            <label for="photo">Выберите файл</label>
+                            <input type="file" class="form-control-file" id="photo" name="file">
+                        </div>
+                        <img src='static/img/photo.jpg' alt=''>
+                        <button type="submit" class="btn btn-primary">Отправить</button>
+                    </form>
+                  </body>
+                </html>'''
 
 
 if __name__ == '__main__':
