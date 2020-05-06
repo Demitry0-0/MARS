@@ -3,6 +3,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, IntegerField
 from wtforms.validators import DataRequired
 import random
+import os
 
 
 class LoginForm(FlaskForm):
@@ -334,6 +335,54 @@ def new():
 @app.route('/load_photo', methods=['POST', 'GET'])
 def load_photo():
     if request.method == 'GET':
+        return render_template('load_photo.html', flag=0)
+    elif request.method == 'POST':
+        f = request.files['file']
+        if f.filename:
+            if 'photo1.jpg' in os.listdir('static\\img'):
+                f.save('static/img/photo.jpg')
+                os.remove('static/img/photo1.jpg')
+                return render_template('load_photo.html', flag=1, photo='photo.jpg')
+            elif 'photo.jpg' in os.listdir('static\\img'):
+                f.save('static/img/photo1.jpg')
+                os.remove('static/img/photo.jpg')
+                return render_template('load_photo.html', flag=1, photo='photo1.jpg')
+            else:
+                f.save('static/img/photo.jpg')
+                return render_template('load_photo.html', flag=1, photo='photo.jpg')
+
+    return render_template('load_photo.html', flag=0)
+
+
+"""def new():
+    return f'''<!doctype html>
+                        <html lang="en">
+                          <head>
+                            <meta charset="utf-8">
+                            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+                             <link rel="stylesheet"
+                             href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+                             integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+                             crossorigin="anonymous">
+                            <link rel="stylesheet" type="text/css" href="{url_for('static', filename='css/style.css')}" />
+                            <title>Пример загрузки файла</title>
+                          </head>
+                          <body>
+                            <form method="post" class="login_form" enctype="multipart/form-data">
+                            <h1>Загрузим файл</h1>
+                               <div class="form-group">
+                                    <label for="photo">Выберите файл</label>
+                                    <input type="file" class="form-control-file" id="photo" name="file">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Отправить</button>
+                            </form>
+                          </body>
+                        </html>'''
+
+
+@app.route('/load_photo', methods=['POST', 'GET'])
+def load_photo():
+    if request.method == 'GET':
         return new()
     elif request.method == 'POST':
         f = request.files['file']
@@ -365,6 +414,8 @@ def load_photo():
                     </form>
                   </body>
                 </html>'''
+
+"""
 
 
 @app.route('/training/<prof>')
