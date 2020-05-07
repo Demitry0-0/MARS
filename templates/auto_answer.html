@@ -1,0 +1,11 @@
+{% extends "my_html.html" %}
+
+{% block content %}
+Фамилия: {{item['surname']}}<br>
+Имя: {{item['name']}}<br>
+Образование: {{item['education']}}<br>
+Профессия: {{item['profession']}}<br>
+Пол: {{item['sex']}}<br>
+Мотивация: {{item['motivation']}}<br>
+Готовы остаться на Марсе: {{item['ready']}}
+{% endblock %}

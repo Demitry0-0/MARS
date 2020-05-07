@@ -442,5 +442,31 @@ def list_prof(tp=False):
     return 'Неверный параметр.'
 
 
+@app.route('/answer')
+def answer():
+    item = {'title': 'Анкета',
+            'surname': 'Wathy',
+            'name': 'Mark',
+            'education': 'выше среднего',
+            'profession': 'штурман марсохода',
+            'sex': 'male',
+            'motivation': 'Всегда мечтал застрять на марсе',
+            'ready': 'True'}
+    return render_template('auto_answer.html', item=item, title=item['title'])
+
+
+@app.route('/auto_answer')
+def auto_answer():
+    item = {'title': 'Анкета',
+            'surname': 'Wathy',
+            'name': 'Mark',
+            'education': 'выше среднего',
+            'profession': 'штурман марсохода',
+            'sex': 'male',
+            'motivation': 'Всегда мечтал застрять на марсе',
+            'ready': 'True'}
+    return render_template('auto_answer.html', item=item, title=item['title'])
+
+
 if __name__ == '__main__':
     app.run(port=8080, host='127.0.0.1')
