@@ -264,6 +264,139 @@ def results(nickname, level, rating):
                     </html>"""
 
 
+@app.route('/galery', methods=['POST', 'GET'])
+def galery():
+    if request.method == 'POST':
+        f = request.files['file']
+        if f.filename:
+            f.save(f'static/img/galery/mars{len(os.listdir("static/img/galery"))}.jpg')
+    s = ''
+    for i, file in enumerate(os.listdir('static\\img\\galery')):
+        s += f'''
+            <div class="carousel-item {'active' if not i else ''}">
+                <img class="d-block w-100" src="{url_for('static', filename='img/galery/' + file)}">
+            </div>'''
+    return """
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>Пейзажи Марса</title>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+          crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href="static/css/style.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<form method="post" class="login_form" enctype="multipart/form-data">
+
+    <center><h1>Пейзажи Марса</h1></center>
+    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+        """ + s + """
+            
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleControls" role="button"
+           data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleControls" role="button"
+           data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+    <h1>Загрузим файл</h1>
+    <div class="form-group">
+        <label for="photo">Выберите файл</label>
+        <input type="file" class="form-control-file" id="photo" name="file">
+    </div>
+    <button type="submit" class="btn btn-primary">Отправить</button>
+</form>
+</body>
+</html>"""
+
+
+# Возможо отличное решение другой задачи
+'''@app.route('/galery', methods=['POST', 'GET'])
+def galery():
+    if request.method == 'POST':
+        f = request.files['file']
+        if f.filename:
+            f.save(f'static/img/galery/mars{len(os.listdir("static/img/galery"))}.jpg')
+    s = ''
+    for file in os.listdir('static\\img\\galery'):
+        s += f''' + '''
+            <div class="carousel-item active">
+                <img class="d-block w-100" src="{url_for('static', filename='img/galery/' + file)}">
+            </div>''' + '''
+    print(s)
+    # return render_template('galery.html')
+    return """
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>Пейзажи Марса</title>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+          crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href="static/css/style.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<form method="post" class="login_form" enctype="multipart/form-data">
+
+    <center><h1>Пейзажи Марса</h1></center>
+    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+        """ + s + """
+            
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleControls" role="button"
+           data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleControls" role="button"
+           data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+    <h1>Загрузим файл</h1>
+    <div class="form-group">
+        <label for="photo">Выберите файл</label>
+        <input type="file" class="form-control-file" id="photo" name="file">
+    </div>
+    <button type="submit" class="btn btn-primary">Отправить</button>
+</form>
+</body>
+</html>"""'''
+
+
 @app.route('/carousel')
 def carousel():
     return """<!doctype html>
