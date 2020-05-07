@@ -1,4 +1,4 @@
-from flask import Flask, url_for, request, render_template, redirect
+from flask import Flask, url_for, request, render_template, redirect, json
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, IntegerField
 from wtforms.validators import DataRequired
@@ -599,6 +599,16 @@ def auto_answer():
             'motivation': 'Всегда мечтал застрять на марсе',
             'ready': 'True'}
     return render_template('auto_answer.html', item=item, title=item['title'])
+
+
+@app.route('/member')
+def member():
+    with open("templates\\crew.json", "rt", encoding="utf8") as f:
+        crew_list = json.loads(f.read())
+    item = crew_list['crew'][random.choice([i for i in crew_list['crew'].keys()])]
+    print(sorted(crew_list['professsion']))
+    return render_template('member.html', item=item,
+                           profession=', '.join(sorted(crew_list['professsion'])))
 
 
 if __name__ == '__main__':
